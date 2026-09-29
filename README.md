@@ -99,15 +99,21 @@ python3 -m http.server 8064
 
 puis ouvrir http://localhost:8064. Les `.htaccess` ne sont pas lus en local : redirections, cache et en-têtes ne se vérifient qu’en ligne.
 
+## Aperçu pour les clients (GitHub Pages)
+
+Le dépôt https://github.com/loupeirrot/gyn64-site publie automatiquement un aperçu à l’adresse **https://loupeirrot.github.io/gyn64-site/**, en une à deux minutes après chaque `git push` sur `main`. Tous les chemins du site sont relatifs, ce qui lui permet de fonctionner dans ce sous-dossier comme à la racine de gyn64.fr. Seule la page 404 garde des chemins absolus (pour OVH) : sur l’aperçu, elle s’affiche sans style.
+
+L’aperçu ne lit pas les `.htaccess` (pas de redirections ni d’en-têtes de cache). Sa balise canonical pointe vers https://gyn64.fr/, ce qui évite qu’il fasse concurrence au vrai site dans Google. `PROMPT_CLAUDE_CODE.md` est exclu du dépôt (`.gitignore`).
+
 ## Mettre en ligne sur OVH
 
 1. **Identifiants FTP** : espace client OVHcloud, *Web Cloud > Hébergements > gyn64.fr > FTP-SSH* (serveur `ftp.clusterXXX.hosting.ovh.net`, identifiant, mot de passe à définir).
-2. **Envoyer les fichiers** dans le dossier `www/`, en excluant `tools/`, `README.md`, `PROMPT_CLAUDE_CODE.md` et `.DS_Store`. Avec FileZilla, glisser le contenu du dossier `Site` sans ces éléments, en affichant les fichiers cachés pour transférer les `.htaccess`. Ou en ligne de commande :
+2. **Envoyer les fichiers** dans le dossier `www/`, en excluant `tools/`, `.git/`, `README.md`, `PROMPT_CLAUDE_CODE.md` et `.DS_Store`. Avec FileZilla, glisser le contenu du dossier `Site` sans ces éléments, en affichant les fichiers cachés pour transférer les `.htaccess`. Ou en ligne de commande :
 
    ```bash
    brew install lftp
    lftp -u IDENTIFIANT ftp.clusterXXX.hosting.ovh.net -e "mirror -R --delete --verbose \
-     --exclude-glob tools/ --exclude-glob .DS_Store \
+     --exclude-glob tools/ --exclude-glob .git/ --exclude-glob .DS_Store \
      --exclude README.md --exclude PROMPT_CLAUDE_CODE.md \
      ./ www/; quit"
    ```
