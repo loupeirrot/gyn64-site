@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Gabarit des images de partage</title>
+<!-- Rendu par tools/build-partage.mjs : partage.html?f=og|1x1|4x3|16x9 -->
+<link rel="stylesheet" href="../css/site.css">
+<style>
+  html, body { margin: 0; width: var(--l); height: var(--h); overflow: hidden; background: var(--nuit); }
+  .affiche { position: relative; width: var(--l); height: var(--h); isolation: isolate; }
+  .affiche__visuel { position: absolute; z-index: 0; }
+  .affiche__textes { position: absolute; z-index: 1; }
+  .affiche__edition { display: block; color: var(--glacier); font-size: calc(var(--t) * .2); margin-bottom: calc(var(--t) * .28); }
+  .affiche__titre { font: 400 var(--t)/.96 var(--serif); letter-spacing: -.01em; }
+  .affiche__titre em { display: block; font-size: .64em; margin-top: .1em; }
+  .affiche__date { margin-top: calc(var(--t) * .42); font: 500 calc(var(--t) * .4)/1.1 var(--serif); font-variant-numeric: oldstyle-nums; }
+  .affiche__lieu { display: block; margin-top: calc(var(--t) * .16); color: var(--glacier); font-size: calc(var(--t) * .2); }
+  .affiche__filet { width: calc(var(--t) * 1.1); height: 2px; background: var(--rose); margin-top: calc(var(--t) * .42); }
+  .grain { position: absolute; inset: 0; animation: none; opacity: .07; z-index: 2; }
+
+  /* paysage (og 1200×630, 16:9, 4:3) : titres à gauche, sculpture à droite */
+  .paysage .affiche__textes { left: 80px; top: 50%; transform: translateY(-50%); }
+  .paysage .affiche__visuel { height: 116%; right: 2%; top: -6%; }
+  /* carré : titres en haut, centrés, sculpture dessous, comme l’affiche */
+  .carre .affiche__textes { left: 0; right: 0; top: 110px; text-align: center; }
+  .carre .affiche__filet { margin-inline: auto; }
+  .carre .affiche__visuel { height: 78%; left: 50%; bottom: -8%; transform: translateX(-50%); }
+</style>
+</head>
+<body>
+<div class="affiche">
+  <img class="affiche__visuel" src="visuel-4x5.webp" alt="">
+  <div class="affiche__textes">
+    <span class="affiche__edition label">11<sup>e</sup>&nbsp;Journée</span>
+    <p class="affiche__titre">Sénologie<br>&amp;&nbsp;Gynécologie<em>du Pays Basque</em></p>
+    <p class="affiche__date">Samedi 12&nbsp;décembre 2026</p>
+    <span class="affiche__lieu label">Cité de l’Océan · Biarritz</span>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+</div>
+<script>
+  const formats = {
+    og:   { l: 1200, h: 630,  t: 84,  mode: 'paysage' },
+    '16x9': { l: 1200, h: 675, t: 88, mode: 'paysage' },
+    '4x3':  { l: 1200, h: 900, t: 104, mode: 'paysage' },
+    '1x1':  { l: 1200, h: 1200, t: 104, mode: 'carre' },
+  };
+  const f = formats[new URLSearchParams(location.search).get('f')] || formats.og;
+  const r = document.documentElement.style;
+  r.setProperty('--l', f.l + 'px'); r.setProperty('--h', f.h + 'px'); r.setProperty('--t', f.t + 'px');
+  document.body.className = f.mode;
+</script>
+</body>
+</html>
