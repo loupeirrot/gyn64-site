@@ -101,6 +101,8 @@ a { color: inherit; }
   outline-offset: 4px;
 }
 
+.insecable { white-space: nowrap; }
+
 .visuellement-masque {
   position: absolute !important;
   width: 1px; height: 1px;
@@ -432,54 +434,61 @@ a { color: inherit; }
   padding-bottom: .6rem;
 }
 
-.programme__cols {
-  margin-top: clamp(64px, 10vh, 112px);
-  row-gap: 72px;
+/* Une session par rangée : titre et modération à gauche, créneaux à droite */
+.session {
+  margin-top: clamp(80px, 12vh, 144px);
   align-items: start;
 }
-.programme__col--matin { grid-column: 1 / 7; }
-.programme__col--apres-midi { grid-column: 8 / -1; margin-top: clamp(80px, 14vh, 160px); }
-
-.programme__moment {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 1rem;
-  padding-bottom: 1.1rem;
+.session__entete {
+  grid-column: 1 / 6;
+  position: sticky;
+  top: clamp(24px, 6vh, 64px);
+}
+.session__moment { color: var(--rose); }
+.session__titre {
+  margin-top: 1.1rem;
+  font-size: clamp(2.25rem, 3.6vw, 3.5rem);
+  line-height: 1.02;
+}
+.session__moderation {
+  margin-top: 1.4rem;
+  color: var(--glacier);
+  font-size: .9375rem;
+}
+.session__creneaux {
+  grid-column: 7 / -1;
   border-bottom: 1px solid var(--filet);
-  color: var(--rose);
 }
 
-.programme__sujet {
-  padding-block: 1.75rem 1.9rem;
-  border-bottom: 1px solid var(--filet);
-}
-.programme__sujet h4 {
-  font-size: clamp(1.75rem, 2.6vw, 2.5rem);
-  line-height: 1.08;
-}
-
-.programme__intervenants {
-  margin-top: clamp(96px, 15vh, 176px);
-  align-items: start;
-}
-.programme__intervenants-label,
-.programme__liste {
-  padding-top: 1.75rem;
+.creneau {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  column-gap: var(--gouttiere);
+  padding-block: 1.3rem 1.4rem;
   border-top: 1px solid var(--filet);
 }
-.programme__intervenants-label { grid-column: 1 / 4; color: var(--rose); padding-top: 2.4rem; }
-.programme__liste { grid-column: 4 / -1; }
-.programme__personne {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 4fr);
-  column-gap: var(--gouttiere);
-  align-items: baseline;
-  padding-bottom: 1.5rem;
+.creneau__heure {
+  font: 400 1.5rem/1.2 var(--serif);
+  font-variant-numeric: oldstyle-nums;
+  color: var(--glacier);
+  white-space: nowrap;
 }
-.programme__personne + .programme__personne { padding-top: 1.5rem; border-top: 1px solid var(--filet); }
-.programme__nom { font: 400 clamp(1.625rem, 2.4vw, 2.25rem)/1.15 var(--serif); }
-.programme__fonction { color: var(--glacier); font-size: .9375rem; }
+.creneau__titre {
+  font: 400 clamp(1.375rem, 1.8vw, 1.75rem)/1.2 var(--serif);
+  font-variant-numeric: oldstyle-nums;
+  text-wrap: pretty;
+}
+.creneau__intervenant {
+  margin-top: .45rem;
+  color: var(--glacier);
+  font-size: .9375rem;
+}
+/* Accueil, pause, déjeuner : en retrait */
+.creneau--pause .creneau__titre {
+  font-style: italic;
+  font-size: clamp(1.25rem, 1.5vw, 1.5rem);
+  color: var(--glacier);
+}
 
 /* ==========================================================================
    4. Informations pratiques
@@ -625,8 +634,7 @@ a { color: inherit; }
   .ouverture__titres,
   .edition__label, .edition__texte, .edition__reperes,
   .programme__titre, .programme__horaires,
-  .programme__col--matin, .programme__col--apres-midi,
-  .programme__intervenants-label, .programme__liste,
+  .session__entete, .session__creneaux,
   .pratique__titre, .pratique__liste,
   .inscription__corps,
   .organisation__label, .organisation__texte, .organisation__logos, .organisation__partenaires,
@@ -640,12 +648,10 @@ a { color: inherit; }
   .edition__reperes { grid-template-columns: 1fr; row-gap: 1.5rem; }
 
   .programme__horaires { margin-top: 1.5rem; padding: 0; }
-  .programme__cols { margin-top: 56px; row-gap: 64px; }
-  .programme__col--apres-midi { margin-top: 0; }
-  .programme__intervenants { margin-top: 80px; }
-  .programme__intervenants-label { padding-bottom: 1.25rem; }
-  .programme__liste { border-top: 0; padding-top: 0; }
-  .programme__personne { grid-template-columns: 1fr; row-gap: .4rem; }
+  .session { margin-top: 72px; row-gap: 2rem; }
+  .session__entete { position: static; }
+  .creneau { grid-template-columns: 4rem minmax(0, 1fr); padding-block: 1.1rem 1.2rem; }
+  .creneau__heure { font-size: 1.3125rem; }
 
   .pratique { row-gap: 40px; }
   .pratique__ligne { grid-template-columns: 1fr; row-gap: .5rem; }

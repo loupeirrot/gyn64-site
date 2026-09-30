@@ -27,22 +27,23 @@ grep -n "a-completer" index.html mentions-legales.html
 
 | Où | Marqueur | À faire |
 |---|---|---|
-| Programme, Infos pratiques | `[À CONFIRMER]`, `[HORAIRES]` (×3) | horaires de la journée, du matin et de l’après-midi |
-| Programme | `[AUTRES INTERVENANTS]` | noms et fonctions ; le Dr Benichou est dans une liste commune, à rattacher à une session si besoin |
+| Infos pratiques | `[À CONFIRMER]` | heure de fin de la journée |
 | L’édition 2026 | `[TEXTE À VALIDER]` | relire les deux phrases proposées (uniquement des faits connus), puis supprimer le marqueur |
 | Mentions légales | `[ADRESSE DU SIÈGE]`, `[À COMPLÉTER]` (RNA), `[NOM]` | adresse de l’association, numéro RNA, directeur ou directrice de la publication |
-| JSON-LD (`index.html`, bloc `application/ld+json`) | `startDate` 08:45 et `endDate` 17:30 | valeurs provisoires : les corriger avec les vrais horaires |
+| JSON-LD (`index.html`, bloc `application/ld+json`) | `endDate` 16:00 | fin provisoire : la corriger quand elle sera confirmée (`startDate` 08:45 est confirmé) |
 | Organisation | bloc `organisation__partenaires` (`hidden`) | ajouter les logos, puis retirer l’attribut `hidden` |
 
 Aucun prix n’est affiché, ni dans la page ni dans les données structurées (`offers` sans `price`). Quand le tarif sera fixé, ajouter dans `offers` : `"price": "…", "priceCurrency": "EUR"`.
 
 ## Modifier les textes
 
-Tout est dans `index.html`, section par section (commentaires `<!-- 1. Ouverture -->`, etc.). Règles typographiques à conserver :
+Tout est dans `index.html`, section par section (commentaires `<!-- 1. Ouverture -->`, etc.). Chaque créneau du programme est un `<li class="creneau">` (heure, titre, intervenant) ; accueil, pauses et déjeuner portent en plus la classe `creneau--pause`. Après une modification du programme, mettre aussi à jour la liste `performer` du JSON-LD.
+
+Règles typographiques à conserver :
 
 - apostrophe typographique `’`, guillemets `« »` ;
-- espace fine insécable avant `; ! ?` : `&#8239;` ;
-- espace insécable avant `:` et entre « Dr » et le nom, ou entre le jour et le mois : `&nbsp;` ;
+- espace fine insécable avant `; : ! ?` : `&#8239;` ;
+- espace insécable entre « Dr » ou « Pr » et le nom, entre le jour et le mois, et dans les heures (`8&nbsp;h&nbsp;45`) : `&nbsp;` ;
 - majuscules accentuées (`É`, `À`) ;
 - « 11ᵉ » s’écrit `11<sup>e</sup>`.
 
