@@ -179,6 +179,9 @@
 
   window.addEventListener('scroll', auDefilement, { passive: true });
   window.addEventListener('resize', auRedimensionnement, { passive: true });
+  // La zone change aussi sans redimensionnement de la fenêtre : sur mobile, elle
+  // occupe l’espace sous les titres, qui bouge quand les polices web arrivent.
+  new ResizeObserver(() => { mesurer(); demander(true); }).observe(cadre);
 
   setTimeout(() => { etapeMin = Math.max(etapeMin, 2); majEtape(cible); }, DELAI_TITRE);
   const minuterie = setTimeout(() => { etapeMin = 3; majEtape(cible); }, DELAI_REVELATION);
